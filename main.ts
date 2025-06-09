@@ -17,6 +17,7 @@ import {
   WorkspaceLeaf,
   TAbstractFile,
   type MarkdownFileInfo,
+  type CachedMetadata,
 } from 'obsidian';
 
 import {
@@ -454,6 +455,22 @@ export default class TagFolderPlugin extends Plugin {
     const links = [...allLinks.filter((e) => e.endsWith('.md')).map((e) => `${e}`)];
     return links;
   }
+  getFileCacheTags(metadata: CachedMetadata) {
+    if (!metadata) return [];
+    const customTagKey = this.settings.customTagKey;
+    if (customTagKey && customTagKey !== 'tags') {
+      const tags = [];
+      const customTag = metadata.frontmatter?.[customTagKey];
+      if (Array.isArray(customTag)) {
+        tags.push(...customTag);
+      } else {
+        tags.push(customTag);
+      }
+      return tags.filter((e) => typeof e == 'string').map((e) => `#${e}`);
+    }
+    const tags = getAllTags(metadata) ?? [];
+    return tags;
+  }
   getFileCacheData(file: TFile): FileCache | false {
     const metadata = this.app.metadataCache.getFileCache(file);
     if (!metadata) return false;
@@ -461,7 +478,7 @@ export default class TagFolderPlugin extends Plugin {
     return {
       file: file,
       links: links,
-      tags: getAllTags(metadata) || [],
+      tags: this.getFileCacheTags(metadata),
     };
   }
   updateFileCachesAll(): boolean {
@@ -1121,13 +1138,15 @@ export default class TagFolderPlugin extends Plugin {
 
     //@ts-ignore
     const ww = (await this.app.fileManager.createAndOpenMarkdownFile()) as TFile;
-    if (this.settings.useFrontmatterTagsForNewNotes) {
+    const customTagKey = this.settings.customTagKey;
+    if (this.settings.useFrontmatterTagsForNewNotes || customTagKey) {
       await this.app.fileManager.processFrontMatter(ww, (matter) => {
-        matter.tags = matter.tags ?? [];
-        matter.tags = expandedTagsAll
+        const key = customTagKey || 'tags';
+        matter[key] = matter[key] ?? [];
+        matter[key] = expandedTagsAll
           .filter((e) => !isSpecialTag(e))
-          .filter((e) => matter.tags.indexOf(e) < 0)
-          .concat(matter.tags);
+          .filter((e) => matter[key].indexOf(e) < 0)
+          .concat(matter[key]);
       });
     } else {
       await this.app.vault.append(ww, expandedTags);
@@ -1310,6 +1329,13 @@ class TagFolderSettingTab extends PluginSettingTab {
           await this.plugin.saveSettings();
         });
       });
+    new Setting(containerEl).setName('自定义标签前导元数据路径').addText((text) => {
+      text.setValue(this.plugin.settings.customTagKey).onChange(async (value) => {
+        this.plugin.settings.customTagKey = value;
+        this.plugin.updateFileCachesAll();
+        await this.plugin.saveSettings();
+      });
+    });
 
     containerEl.createEl('h2', { text: '操作设置' });
     new Setting(containerEl).setName('点击标签时在标签文件夹内搜索标签').addToggle((toggle) => {

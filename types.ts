@@ -87,6 +87,7 @@ export interface TagFolderSettings {
   linkCombineOtherTree: boolean;
   showListIn: keyof typeof enumShowListIn;
   displayFolderAsTag: boolean;
+  customTagKey: string;
 }
 
 export const DEFAULT_SETTINGS: TagFolderSettings = {
@@ -133,6 +134,7 @@ export const DEFAULT_SETTINGS: TagFolderSettings = {
   linkCombineOtherTree: true,
   showListIn: '',
   displayFolderAsTag: false,
+  customTagKey: '',
 };
 
 export const VIEW_TYPE_SCROLL = 'tagfolder-view-scroll';
