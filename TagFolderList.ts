@@ -53,6 +53,7 @@ export class TagFolderList extends TagFolderViewBase {
     this.newNote = this.newNote.bind(this);
     this.showLevelSelect = this.showLevelSelect.bind(this);
     this.switchView = this.switchView.bind(this);
+    this.refreshTree = this.refreshTree.bind(this);
   }
 
   async newNote(evt: MouseEvent) {
@@ -84,6 +85,7 @@ export class TagFolderList extends TagFolderViewBase {
         switchView: this.switchView,
         saveSettings: this.saveSettings.bind(this),
         stateStore: this.stateStore,
+        refreshTree: this.refreshTree,
       },
     });
     return await Promise.resolve();

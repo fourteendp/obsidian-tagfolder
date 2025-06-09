@@ -24,6 +24,7 @@ export class TagFolderView extends TagFolderViewBase {
     this.newNote = this.newNote.bind(this);
     this.showLevelSelect = this.showLevelSelect.bind(this);
     this.switchView = this.switchView.bind(this);
+    this.refreshTree = this.refreshTree.bind(this);
     this.treeViewType = viewType;
     // this.setState({ viewType: this.viewType, type: this.getViewType() }, {});
   }
@@ -58,6 +59,7 @@ export class TagFolderView extends TagFolderViewBase {
         switchView: this.switchView,
         viewType: this.treeViewType,
         saveSettings: this.saveSettings.bind(this),
+        refreshTree: this.refreshTree,
       },
     });
     this.component = app;

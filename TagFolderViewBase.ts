@@ -133,6 +133,12 @@ export abstract class TagFolderViewBase extends ItemView {
     menu.showAtMouseEvent(evt);
   }
 
+  refreshTree(evt: MouseEvent) {
+    evt.preventDefault();
+    this.plugin.refreshAllTree();
+    new Notice('标签树已刷新');
+  }
+
   abstract getViewType(): string;
 
   showMenu(evt: MouseEvent, trail: string[], targetTag?: string, targetItems?: ViewItem[]) {

@@ -32,6 +32,7 @@
     switchView: () => void;
     viewType?: TREE_TYPE;
     stateStore?: Writable<TagFolderListState>;
+    refreshTree: (evt: MouseEvent) => void;
   }
 
   let {
@@ -50,6 +51,7 @@
     switchView,
     viewType = 'tags',
     stateStore,
+    refreshTree,
   }: Props = $props();
 
   const isMainTree = $derived(tags.length == 0);
@@ -120,6 +122,7 @@
   let bothIcon = $state('');
   let linkIcon = $state('');
   let closeAllIcon = $state('');
+  let refreshIcon = $state('');
 
   async function switchIncoming() {
     let newSet = { ..._setting };
@@ -234,6 +237,9 @@
 
       setIcon(iconDivEl, 'lucide-chevrons-down-up');
       closeAllIcon = iconDivEl.innerHTML;
+
+      setIcon(iconDivEl, 'refresh-cw');
+      refreshIcon = iconDivEl.innerHTML;
     }
     const int = setInterval(() => {
       performHide.set(Date.now());
@@ -370,6 +376,11 @@
         {@html closeAllIcon}
       </div>
     {/if}
+    <!-- svelte-ignore a11y_click_events_have_key_events -->
+    <!-- svelte-ignore a11y_no_static_element_interactions -->
+    <div class="clickable-icon nav-action-button" aria-label="刷新" onclick={refreshTree}>
+      {@html refreshIcon}
+    </div>
   </div>
 </div>
 {#if showSearch && isMainTree}
