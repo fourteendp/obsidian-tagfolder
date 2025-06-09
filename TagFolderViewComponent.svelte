@@ -375,7 +375,7 @@
 {#if showSearch && isMainTree}
   <div class="search-row">
     <div class="search-input-container global-search-input-container">
-      <input type="search" spellcheck="false" placeholder="Type to start search..." bind:value={$searchString} />
+      <input type="search" spellcheck="false" placeholder="键入以开始搜索..." bind:value={$searchString} />
       <!-- svelte-ignore a11y_click_events_have_key_events -->
       <!-- svelte-ignore a11y_no_static_element_interactions -->
       <div
