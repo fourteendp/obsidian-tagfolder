@@ -78,9 +78,9 @@ export type DISPLAY_METHOD = 'PATH/NAME' | 'NAME' | 'NAME : PATH';
 export type HIDE_ITEMS_TYPE = 'NONE' | 'DEDICATED_INTERMIDIATES' | 'ALL_EXCEPT_BOTTOM';
 
 const HideItemsType: Record<string, string> = {
-  NONE: 'Hide nothing',
-  DEDICATED_INTERMIDIATES: 'Only intermediates of nested tags',
-  ALL_EXCEPT_BOTTOM: 'All intermediates',
+  NONE: '不隐藏任何内容',
+  DEDICATED_INTERMIDIATES: '仅隐藏嵌套标签的中间项',
+  ALL_EXCEPT_BOTTOM: '隐藏所有中间项',
 };
 
 function dotted<T extends Record<string, any>>(object: T, notation: string) {
