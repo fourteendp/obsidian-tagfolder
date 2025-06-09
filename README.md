@@ -13,14 +13,17 @@ Install this plugin, press `Ctrl+p`, and choose "Show Tag Folder".
 This plugin creates a tree by tags permutation.
 
 Like this,
+
 ### Simple case
 
 If you have docs,
+
 ```
 Apple : #food #red #sweet
 Pear  : #food #green #sweet
 Tuna  : #food #red
 ```
+
 ![](./images/simplecase.png)
 
 ...and more are shown.
@@ -37,6 +40,7 @@ Technical information: #dev #note #2021/12/09 #status/draft
 SelfHosted LiveSync Readme : #dev #readme #2021/12/06 #status/proofread
 Old Note: #dev #readme #2021/12/10 #status/abandoned
 ```
+
 #### Tag hierarchy of status
 
 ![](./images/respect-nestedtag-1.png)
@@ -45,13 +49,14 @@ Old Note: #dev #readme #2021/12/10 #status/abandoned
 
 ![](./images/respect-nestedtag-2.png)
 
-
 #### Search tags
+
 You can search tags. like this:
 
 ```
 sweet -red | food -sweet
 ```
+
 When using this filter, this plugin shows only "Pear" (Sweet but not red) and "Tuna" (food but not sweet).
 
 ### Settings
@@ -63,25 +68,27 @@ When using this filter, this plugin shows only "Pear" (Sweet but not red) and "T
 Place TagFolder on the left pane and activate it at every Obsidian launch.
 
 ##### Use pinning
+
 We can pin the tag if we enable this option.  
 When this feature is enabled, the pin information is saved in the file set in the next configuration.  
 Pinned tags are sorted according to `key` in the frontmatter of `taginfo.md`.
 
 ##### Pin information file
+
 We can change the name of the file in which pin information is saved.
 This can be configured also from the context-menu.
 
 | Item     | Meaning of the value                                                                              |
 | -------- | ------------------------------------------------------------------------------------------------- |
 | key      | If exists, the tag is pinned.                                                                     |
-| mark     | The label which is shown instead of `📌`.                                                          |
+| mark     | The label which is shown instead of `📌`.                                                         |
 | alt      | The tag will be shown as this. But they will not be merged into the same one. No `#` is required. |
 | redirect | The tag will be redirected to the configured one and will be merged. No `#` is required.          |
 
 ##### Disable narrowing down
+
 TagFolder creates the folder structure by collecting combinations of tags that are used in the same note, to make it easier for us to find notes.
 When this feature is enabled, collected combinations are no longer structured and show as we have organized them in a manner.
-
 
 #### Files
 
@@ -92,6 +99,7 @@ You can configure how the entry shows.
 ##### Order method
 
 You can order items by:
+
 - Displaying name
 - Filename
 - Modified time
@@ -102,6 +110,7 @@ You can order items by:
 When you enable this option, the value in the frontmatter or first level one heading will be shown instead of `NAME`.
 
 ##### Frontmatter path
+
 Dotted path to retrieve title from frontmatter.
 
 #### Tags
@@ -109,19 +118,20 @@ Dotted path to retrieve title from frontmatter.
 ##### Order method
 
 You can order tags by:
+
 - Filename
 - Count of items
 
 ##### Use virtual tags
 
 When we enable this feature, our notes will be tagged as their freshness automatically.
-| Icon | Edited ...            |
+| Icon | Edited ... |
 | ---- | --------------------- |
-| 🕐    | Within an hour        |
-| 📖    | Within 6 hours        |
-| 📗    | Within 3 days         |
-| 📚    | Within 7 days         |
-| 🗄    | Older than 7 days ago |
+| 🕐 | Within an hour |
+| 📖 | Within 6 hours |
+| 📗 | Within 3 days |
+| 📚 | Within 7 days |
+| 🗄 | Older than 7 days ago |
 
 ##### Display folder as tag
 
@@ -134,10 +144,12 @@ This setting changes how tags are stored in new notes created by TagFolder. When
 #### Actions
 
 ##### Search tags inside TagFolder when clicking tags
+
 We can search tags inside TagFolder when clicking tags instead of opening the default search pane.
 With control and shift keys, we can remove the tag from the search condition or add an exclusion of it to that.
 
 ##### List files in a separated pane
+
 When enabled, files will be shown in a separated pane.
 
 #### Arrangements
@@ -145,11 +157,13 @@ When enabled, files will be shown in a separated pane.
 ##### Hide Items
 
 Configure hiding items.
+
 - Hide nothing
 - Only intermediates of nested tags
 - All intermediates
 
 If you have these items:
+
 ```
 2021-11-01 : #daily/2021/11 #status/summarized
 2021-11-02 : #daily/2021/11 #status/summarized
@@ -158,6 +172,7 @@ If you have these items:
 ```
 
 This setting affects as like below.
+
 - Hide nothing
 
 ```
@@ -189,7 +204,8 @@ daily
 ```
 
 - Only intermediates of nested tags
-Hide only intermediates of nested tags, so show items only on the last or break of the nested tags.
+  Hide only intermediates of nested tags, so show items only on the last or break of the nested tags.
+
 ```
 daily
     → 2021
@@ -206,8 +222,10 @@ daily
         → 12
             :
 ```
+
 - All intermediates
-Hide all intermediates, so show items only deepest.
+  Hide all intermediates, so show items only deepest.
+
 ```
 daily
     → 2021
@@ -223,9 +241,11 @@ daily
 ```
 
 ##### Merge redundant combinations
+
 When this feature is enabled, a/b and b/a are merged into a/b if there are no intermediates.
 
 ##### Do not simplify empty folders
+
 Keep empty folders, even if they can be simplified.
 
 ##### Do not treat nested tags as dedicated levels
@@ -239,34 +259,35 @@ If you enable this option, every nested tag is split into normal tags.
 If we have the doc (e.g., `example note`) with nested tags which have the same parents, like `#topic/calculus`, `#topic/electromagnetics`:
 
 - Disabled
+
 ```
 topic
      - > calculus
          topic
                - > electromagnetics
                    example note
-         example note 
+         example note
 ```
+
 - Enabled
+
 ```
 topic
      - > calculus
           - > electromagnetics
               example note
-         example note 
+         example note
 ```
 
 #### Filters
 
-
 ##### Target Folders
-If we set this, the plugin will only target files in it.
 
+If we set this, the plugin will only target files in it.
 
 ##### Ignore Folders
 
 Ignore documents in specific folders.
-
 
 ##### Ignore note Tag
 
