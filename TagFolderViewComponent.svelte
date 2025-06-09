@@ -290,25 +290,25 @@
   <div class="nav-buttons-container tagfolder-buttons-container">
     <!-- svelte-ignore a11y_click_events_have_key_events -->
     <!-- svelte-ignore a11y_no_static_element_interactions -->
-    <div class="clickable-icon nav-action-button" aria-label="New note" onclick={newNote}>
+    <div class="clickable-icon nav-action-button" aria-label="新建笔记" onclick={newNote}>
       {@html newNoteIcon}
     </div>
     {#if isMainTree}
       <!-- svelte-ignore a11y_click_events_have_key_events -->
       <!-- svelte-ignore a11y_no_static_element_interactions -->
-      <div class="clickable-icon nav-action-button" aria-label="Change sort order" onclick={showOrder}>
+      <div class="clickable-icon nav-action-button" aria-label="更改排序顺序" onclick={showOrder}>
         {@html upAndDownArrowsIcon}
       </div>
       <!-- svelte-ignore a11y_click_events_have_key_events -->
       <!-- svelte-ignore a11y_no_static_element_interactions -->
-      <div class="clickable-icon nav-action-button" aria-label="Expand limit" onclick={showLevelSelect}>
+      <div class="clickable-icon nav-action-button" aria-label="展开限制" onclick={showLevelSelect}>
         {@html stackedLevels}
       </div>
       <!-- svelte-ignore a11y_click_events_have_key_events -->
       <!-- svelte-ignore a11y_no_static_element_interactions -->
       <div
         class={`clickable-icon nav-action-button ${showSearch ? ' is-active' : ''}`}
-        aria-label="Search"
+        aria-label="搜索"
         onclick={toggleSearch}
       >
         {@html searchIcon}
@@ -317,7 +317,7 @@
     {#if isViewSwitchable}
       <!-- svelte-ignore a11y_click_events_have_key_events -->
       <!-- svelte-ignore a11y_no_static_element_interactions -->
-      <div class="clickable-icon nav-action-button" aria-label="Switch List/Tree" onclick={doSwitch}>
+      <div class="clickable-icon nav-action-button" aria-label="切换列表/树视图" onclick={doSwitch}>
         {@html switchIcon}
       </div>
     {/if}
@@ -327,7 +327,7 @@
       <div
         class="clickable-icon nav-action-button"
         class:is-active={incomingEnabled}
-        aria-label="Toggle Incoming"
+        aria-label="切换入链显示"
         onclick={switchIncoming}
       >
         {@html incomingIcon}
@@ -337,7 +337,7 @@
       <div
         class="clickable-icon nav-action-button"
         class:is-active={outgoingEnabled}
-        aria-label="Toggle Outgoing"
+        aria-label="切换出链显示"
         onclick={switchOutgoing}
       >
         {@html outgoingIcon}
@@ -347,7 +347,7 @@
       <div
         class="clickable-icon nav-action-button"
         class:is-active={bothEnabled}
-        aria-label="Toggle Incoming&Outgoing"
+        aria-label="切换入链和出链显示"
         onclick={switchBoth}
       >
         {@html bothIcon}
@@ -357,7 +357,7 @@
       <div
         class="clickable-icon nav-action-button"
         class:is-active={onlyFDREnabled}
-        aria-label="Toggle Hide indirect notes"
+        aria-label="切换隐藏间接笔记"
         onclick={switchOnlyFDR}
       >
         {@html linkIcon}
@@ -366,7 +366,7 @@
     {#if isMainTree}
       <!-- svelte-ignore a11y_click_events_have_key_events -->
       <!-- svelte-ignore a11y_no_static_element_interactions -->
-      <div class="clickable-icon nav-action-button" aria-label="Collapse all" onclick={closeAllOpenedFolders}>
+      <div class="clickable-icon nav-action-button" aria-label="全部折叠" onclick={closeAllOpenedFolders}>
         {@html closeAllIcon}
       </div>
     {/if}
@@ -380,7 +380,7 @@
       <!-- svelte-ignore a11y_no_static_element_interactions -->
       <div
         class="search-input-clear-button"
-        aria-label="Clear search"
+        aria-label="清除搜索"
         style="display:{$searchString.trim() == '' ? 'none' : ''};"
         onclick={clearSearch}
       ></div>

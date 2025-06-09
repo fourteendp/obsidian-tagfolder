@@ -49,7 +49,7 @@ export abstract class TagFolderViewBase extends ItemView {
 
     menu.addItem((item) => {
       item
-        .setTitle('Tags')
+        .setTitle('标签')
         .setIcon('hashtag')
         .onClick((evt2) => {
           const menu2 = new Menu();
@@ -75,7 +75,7 @@ export abstract class TagFolderViewBase extends ItemView {
     });
     menu.addItem((item) => {
       item
-        .setTitle('Items')
+        .setTitle('项目')
         .setIcon('document')
         .onClick((evt2) => {
           const menu2 = new Menu();
@@ -111,7 +111,7 @@ export abstract class TagFolderViewBase extends ItemView {
     };
     for (const level of [2, 3, 4, 5]) {
       menu.addItem((item) => {
-        item.setTitle(`Level ${level - 1}`).onClick(() => {
+        item.setTitle(`层级 ${level - 1}`).onClick(() => {
           void setLevel(level);
         });
         if (this.plugin.settings.expandLimit == level) item.setIcon('checkmark');
@@ -121,7 +121,7 @@ export abstract class TagFolderViewBase extends ItemView {
 
     menu.addItem((item) => {
       item
-        .setTitle('No limit')
+        .setTitle('无限制')
         // .setIcon("hashtag")
         .onClick(() => {
           void setLevel(0);
@@ -168,7 +168,7 @@ export abstract class TagFolderViewBase extends ItemView {
       if (navigator && navigator.clipboard) {
         menu.addItem((item) =>
           item
-            .setTitle(`Copy tags:${expandedTags}`)
+            .setTitle(`复制标签:${expandedTags}`)
             .setIcon('hashtag')
             .onClick(async () => {
               await navigator.clipboard.writeText(expandedTags);
@@ -178,7 +178,7 @@ export abstract class TagFolderViewBase extends ItemView {
       }
       menu.addItem((item) =>
         item
-          .setTitle(`New note ${targetTag ? 'in here' : 'as like this'}`)
+          .setTitle(`新建笔记:${targetTag ? '关联此标签' : '包含类似标签'}`)
           .setIcon('create-new')
           .onClick(async () => {
             await this.plugin.createNewNote(trail);
@@ -191,7 +191,7 @@ export abstract class TagFolderViewBase extends ItemView {
           if (tag in this.plugin.tagInfo && 'key' in this.plugin.tagInfo[tag]) {
             menu.addItem((item) =>
               item
-                .setTitle(`Unpin`)
+                .setTitle(`取消固定`)
                 .setIcon('pin')
                 .onClick(async () => {
                   this.plugin.tagInfo[tag] = toggleObjectProp(this.plugin.tagInfo[tag], 'key', false);
@@ -202,7 +202,7 @@ export abstract class TagFolderViewBase extends ItemView {
           } else {
             menu.addItem((item) => {
               item
-                .setTitle(`Pin`)
+                .setTitle(`固定`)
                 .setIcon('pin')
                 .onClick(async () => {
                   this.plugin.tagInfo[tag] = toggleObjectProp(this.plugin.tagInfo[tag], 'key', '');
@@ -213,7 +213,7 @@ export abstract class TagFolderViewBase extends ItemView {
           }
           menu.addItem((item) => {
             item
-              .setTitle(`Set an alternative label`)
+              .setTitle(`设置标签别名`)
               .setIcon('pencil')
               .onClick(async () => {
                 const oldAlt = tag in this.plugin.tagInfo ? (this.plugin.tagInfo[tag].alt ?? '') : '';
@@ -230,7 +230,7 @@ export abstract class TagFolderViewBase extends ItemView {
           });
           menu.addItem((item) => {
             item
-              .setTitle(`Change the mark`)
+              .setTitle(`更改标记样式`)
               .setIcon('pencil')
               .onClick(async () => {
                 const oldMark = tag in this.plugin.tagInfo ? (this.plugin.tagInfo[tag].mark ?? '') : '';
@@ -247,7 +247,7 @@ export abstract class TagFolderViewBase extends ItemView {
           });
           menu.addItem((item) => {
             item
-              .setTitle(`Redirect this tag to ...`)
+              .setTitle(`将此标签重定向至 ...`)
               .setIcon('pencil')
               .onClick(async () => {
                 const oldRedirect = tag in this.plugin.tagInfo ? (this.plugin.tagInfo[tag].redirect ?? '') : '';
@@ -265,7 +265,7 @@ export abstract class TagFolderViewBase extends ItemView {
           if (targetItems) {
             menu.addItem((item) => {
               item
-                .setTitle(`Open scroll view`)
+                .setTitle(`打开滚动浏览视图`)
                 .setIcon('sheets-in-box')
                 .onClick(async () => {
                   const files = targetItems.map((e) => e.path);
@@ -274,7 +274,7 @@ export abstract class TagFolderViewBase extends ItemView {
             });
             menu.addItem((item) => {
               item
-                .setTitle(`Open list`)
+                .setTitle(`打开列表视图`)
                 .setIcon('sheets-in-box')
                 .onClick(() => {
                   selectedTags.set(expandedTagsAll);
@@ -292,7 +292,7 @@ export abstract class TagFolderViewBase extends ItemView {
       menu.addSeparator();
       menu.addItem((item) =>
         item
-          .setTitle(`Open in new tab`)
+          .setTitle(`在新标签页打开`)
           .setSection('open')
           .setIcon('lucide-file-plus')
           .onClick(async () => {
@@ -301,7 +301,7 @@ export abstract class TagFolderViewBase extends ItemView {
       );
       menu.addItem((item) =>
         item
-          .setTitle(`Open to the right`)
+          .setTitle(`在右侧打开`)
           .setSection('open')
           .setIcon('lucide-separator-vertical')
           .onClick(async () => {
@@ -316,7 +316,7 @@ export abstract class TagFolderViewBase extends ItemView {
       menu.addSeparator();
       menu.addItem((item) =>
         item
-          .setTitle(`Open in new tab`)
+          .setTitle(`在新标签页打开`)
           .setSection('open')
           .setIcon('lucide-file-plus')
           .onClick(async () => {
@@ -325,7 +325,7 @@ export abstract class TagFolderViewBase extends ItemView {
       );
       menu.addItem((item) =>
         item
-          .setTitle(`Open to the right`)
+          .setTitle(`在右侧打开`)
           .setSection('open')
           .setIcon('lucide-separator-vertical')
           .onClick(async () => {

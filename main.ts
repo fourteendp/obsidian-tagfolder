@@ -251,28 +251,28 @@ export default class TagFolderPlugin extends Plugin {
     });
     this.addCommand({
       id: 'tagfolder-open',
-      name: 'Show Tag Folder',
+      name: '显示标签文件夹',
       callback: () => {
         void this.activateView();
       },
     });
     this.addCommand({
       id: 'tagfolder-link-open',
-      name: 'Show Link Folder',
+      name: '显示链接文件夹',
       callback: () => {
         void this.activateViewLink();
       },
     });
     this.addCommand({
       id: 'tagfolder-rebuild-tree',
-      name: 'Force Rebuild',
+      name: '强制重建',
       callback: () => {
         this.refreshAllTree();
       },
     });
     this.addCommand({
       id: 'tagfolder-create-similar',
-      name: 'Create a new note with the same tags',
+      name: '创建带有相同标签的新笔记',
       editorCallback: async (editor: Editor, view: MarkdownView | MarkdownFileInfo) => {
         const file = view?.file;
         if (!file) return;
@@ -1151,10 +1151,10 @@ class TagFolderSettingTab extends PluginSettingTab {
     const { containerEl } = this;
     containerEl.empty();
 
-    containerEl.createEl('h2', { text: 'Behavior' });
+    containerEl.createEl('h2', { text: '行为设置' });
     new Setting(containerEl)
-      .setName('Always Open')
-      .setDesc('Place TagFolder on the left pane and activate it at every Obsidian launch')
+      .setName('始终打开')
+      .setDesc('将标签文件夹放置在左侧面板，并在每次启动 Obsidian 时激活它')
       .addToggle((toggle) =>
         toggle.setValue(this.plugin.settings.alwaysOpen).onChange(async (value) => {
           this.plugin.settings.alwaysOpen = value;
@@ -1162,8 +1162,8 @@ class TagFolderSettingTab extends PluginSettingTab {
         })
       );
     new Setting(containerEl)
-      .setName('Use pinning')
-      .setDesc('When this feature is enabled, the pin information is saved in the file set in the next configuration.')
+      .setName('使用固定功能')
+      .setDesc('启用此功能后，固定信息将保存在下一个配置中设置的文件里。')
       .addToggle((toggle) => {
         toggle.setValue(this.plugin.settings.useTagInfo).onChange(async (value) => {
           this.plugin.settings.useTagInfo = value;
@@ -1175,7 +1175,7 @@ class TagFolderSettingTab extends PluginSettingTab {
         });
       });
     const pi = new Setting(containerEl)
-      .setName('Pin information file')
+      .setName('固定信息文件')
       .setDisabled(!this.plugin.settings.useTagInfo)
       .addText((text) => {
         text.setValue(this.plugin.settings.tagInfo).onChange(async (value) => {
@@ -1187,26 +1187,24 @@ class TagFolderSettingTab extends PluginSettingTab {
         });
       });
     new Setting(containerEl)
-      .setName('Disable narrowing down')
-      .setDesc(
-        'When this feature is enabled, relevant tags will be shown with the title instead of making a sub-structure.'
-      )
+      .setName('禁用筛选功能')
+      .setDesc('启用此功能后，相关标签将以标题形式显示，而非生成子结构。')
       .addToggle((toggle) => {
         toggle.setValue(this.plugin.settings.disableNarrowingDown).onChange(async (value) => {
           this.plugin.settings.disableNarrowingDown = value;
           await this.plugin.saveSettings();
         });
       });
-    containerEl.createEl('h2', { text: 'Files' });
+    containerEl.createEl('h2', { text: '文件设置' });
     new Setting(containerEl)
-      .setName('Display method')
-      .setDesc('How to show a title of files')
+      .setName('显示方式')
+      .setDesc('如何显示文件标题')
       .addDropdown((dropdown) =>
         dropdown
           .addOptions({
-            'PATH/NAME': 'PATH/NAME',
-            NAME: 'NAME',
-            'NAME : PATH': 'NAME : PATH',
+            'PATH/NAME': '路径/名称',
+            NAME: '名称',
+            'NAME : PATH': '名称 : 路径',
           })
           .setValue(this.plugin.settings.displayMethod)
           .onChange(async (value) => {
@@ -1225,8 +1223,8 @@ class TagFolderSettingTab extends PluginSettingTab {
       // this.plugin.setRoot(this.plugin.root);
     };
     new Setting(containerEl)
-      .setName('Order method')
-      .setDesc('how to order items')
+      .setName('排序方式')
+      .setDesc('如何对项目进行排序')
       .addDropdown((dd) => {
         dd.addOptions(OrderKeyItem)
           .setValue(this.plugin.settings.sortType.split('_')[0])
@@ -1238,8 +1236,8 @@ class TagFolderSettingTab extends PluginSettingTab {
           .onChange((order) => setOrderMethod(undefined, order));
       });
     new Setting(containerEl)
-      .setName('Prioritize items which are not contained in sub-folder')
-      .setDesc('If this has been enabled, the items which have no more extra tags are first.')
+      .setName('优先显示非子文件夹中的项目')
+      .setDesc('启用此选项后，没有额外标签的项目将优先显示。')
       .addToggle((toggle) => {
         toggle.setValue(this.plugin.settings.sortExactFirst).onChange(async (value) => {
           this.plugin.settings.sortExactFirst = value;
@@ -1247,8 +1245,8 @@ class TagFolderSettingTab extends PluginSettingTab {
         });
       });
     new Setting(containerEl)
-      .setName('Use title')
-      .setDesc('Use value in the frontmatter or first level one heading for `NAME`.')
+      .setName('使用标题')
+      .setDesc('使用前导元数据中的值或一级标题作为 “名称”。')
       .addToggle((toggle) => {
         toggle.setValue(this.plugin.settings.useTitle).onChange(async (value) => {
           this.plugin.settings.useTitle = value;
@@ -1257,7 +1255,7 @@ class TagFolderSettingTab extends PluginSettingTab {
         });
       });
     const fpath = new Setting(containerEl)
-      .setName('Frontmatter path')
+      .setName('前导元数据路径')
       .setDisabled(!this.plugin.settings.useTitle)
       .addText((text) => {
         text.setValue(this.plugin.settings.frontmatterKey).onChange(async (value) => {
@@ -1266,7 +1264,7 @@ class TagFolderSettingTab extends PluginSettingTab {
         });
       });
 
-    containerEl.createEl('h2', { text: 'Tags' });
+    containerEl.createEl('h2', { text: '标签设置' });
 
     const setOrderMethodTag = async (key?: string, order?: string) => {
       const oldSetting = this.plugin.settings.sortTypeTag.split('_');
@@ -1278,8 +1276,8 @@ class TagFolderSettingTab extends PluginSettingTab {
       // this.plugin.setRoot(this.plugin.root);
     };
     new Setting(containerEl)
-      .setName('Order method')
-      .setDesc('how to order tags')
+      .setName('排序方式')
+      .setDesc('如何对标签进行排序')
       .addDropdown((dd) => {
         dd.addOptions(OrderKeyTag)
           .setValue(this.plugin.settings.sortTypeTag.split('_')[0])
@@ -1291,21 +1289,21 @@ class TagFolderSettingTab extends PluginSettingTab {
           .onChange((order) => setOrderMethodTag(undefined, order));
       });
 
-    new Setting(containerEl).setName('Use virtual tags').addToggle((toggle) => {
+    new Setting(containerEl).setName('使用虚拟标签').addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.useVirtualTag).onChange(async (value) => {
         this.plugin.settings.useVirtualTag = value;
         await this.plugin.saveSettings();
       });
     });
-    new Setting(containerEl).setName('Display folder as tag').addToggle((toggle) => {
+    new Setting(containerEl).setName('将文件夹显示为标签').addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.displayFolderAsTag).onChange(async (value) => {
         this.plugin.settings.displayFolderAsTag = value;
         await this.plugin.saveSettings();
       });
     });
     new Setting(containerEl)
-      .setName('Store tags in frontmatter for new notes')
-      .setDesc('Otherwise, tags are stored with #hashtags at the top of the note')
+      .setName('为新笔记在前导元数据中存储标签')
+      .setDesc('否则，标签将以 # 标签形式存储在笔记顶部')
       .addToggle((toggle) => {
         toggle.setValue(this.plugin.settings.useFrontmatterTagsForNewNotes).onChange(async (value) => {
           this.plugin.settings.useFrontmatterTagsForNewNotes = value;
@@ -1313,22 +1311,22 @@ class TagFolderSettingTab extends PluginSettingTab {
         });
       });
 
-    containerEl.createEl('h2', { text: 'Actions' });
-    new Setting(containerEl).setName('Search tags inside TagFolder when clicking tags').addToggle((toggle) => {
+    containerEl.createEl('h2', { text: '操作设置' });
+    new Setting(containerEl).setName('点击标签时在标签文件夹内搜索标签').addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.overrideTagClicking).onChange(async (value) => {
         this.plugin.settings.overrideTagClicking = value;
         await this.plugin.saveSettings();
       });
     });
-    new Setting(containerEl).setName('List files in a separated pane').addToggle((toggle) => {
+    new Setting(containerEl).setName('在单独面板中列出文件').addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.useMultiPaneList).onChange(async (value) => {
         this.plugin.settings.useMultiPaneList = value;
         await this.plugin.saveSettings();
       });
     });
     new Setting(containerEl)
-      .setName('Show list in')
-      .setDesc('This option applies to the newly opened list')
+      .setName('列表显示位置')
+      .setDesc('此选项适用于新打开的列表')
       .addDropdown((dropdown) => {
         dropdown
           .addOptions(enumShowListIn)
@@ -1338,11 +1336,11 @@ class TagFolderSettingTab extends PluginSettingTab {
             await this.plugin.saveSettings();
           });
       });
-    containerEl.createEl('h2', { text: 'Arrangements' });
+    containerEl.createEl('h2', { text: '布局设置' });
 
     new Setting(containerEl)
-      .setName('Hide Items')
-      .setDesc('Hide items on the landing or nested tags')
+      .setName('隐藏项目')
+      .setDesc('隐藏起始标签或嵌套标签上的项目')
       .addDropdown((dd) => {
         dd.addOptions(HideItemsType)
           .setValue(this.plugin.settings.hideItems)
@@ -1354,8 +1352,8 @@ class TagFolderSettingTab extends PluginSettingTab {
           });
       });
     new Setting(containerEl)
-      .setName('Merge redundant combinations')
-      .setDesc('When this feature is enabled, a/b and b/a are merged into a/b if there is no intermediates.')
+      .setName('合并冗余组合')
+      .setDesc('启用此功能后，如果没有中间项，a/b 和 b/a 将合并为 a/b。')
       .addToggle((toggle) => {
         toggle.setValue(this.plugin.settings.mergeRedundantCombination).onChange(async (value) => {
           this.plugin.settings.mergeRedundantCombination = value;
@@ -1363,8 +1361,8 @@ class TagFolderSettingTab extends PluginSettingTab {
         });
       });
     new Setting(containerEl)
-      .setName('Do not simplify empty folders')
-      .setDesc('Keep empty folders, even if they can be simplified.')
+      .setName('不简化空文件夹')
+      .setDesc('保留空文件夹，即使它们可以被简化。')
       .addToggle((toggle) => {
         toggle.setValue(this.plugin.settings.doNotSimplifyTags).onChange(async (value) => {
           this.plugin.settings.doNotSimplifyTags = value;
@@ -1373,8 +1371,8 @@ class TagFolderSettingTab extends PluginSettingTab {
       });
 
     new Setting(containerEl)
-      .setName('Do not treat nested tags as dedicated levels')
-      .setDesc('Treat nested tags as normal tags')
+      .setName('不将嵌套标签视为专用层级')
+      .setDesc('将嵌套标签视为普通标签')
       .addToggle((toggle) => {
         toggle.setValue(this.plugin.settings.disableNestedTags).onChange(async (value) => {
           this.plugin.settings.disableNestedTags = value;
@@ -1382,8 +1380,8 @@ class TagFolderSettingTab extends PluginSettingTab {
         });
       });
     new Setting(containerEl)
-      .setName('Reduce duplicated parents in nested tags')
-      .setDesc('If enabled, #web/css, #web/javascript will merged into web -> css -> javascript')
+      .setName('减少嵌套标签中的重复父标签')
+      .setDesc('启用后，#web/css、#web/javascript 将合并为 web -> css -> javascript')
       .addToggle((toggle) => {
         toggle.setValue(this.plugin.settings.reduceNestedParent).onChange(async (value) => {
           this.plugin.settings.reduceNestedParent = value;
@@ -1391,16 +1389,16 @@ class TagFolderSettingTab extends PluginSettingTab {
         });
       });
 
-    new Setting(containerEl).setName('Keep untagged items on the root').addToggle((toggle) => {
+    new Setting(containerEl).setName('将无标签项目保留在根目录').addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.expandUntaggedToRoot).onChange(async (value) => {
         this.plugin.settings.expandUntaggedToRoot = value;
         await this.plugin.saveSettings();
       });
     });
 
-    containerEl.createEl('h2', { text: 'Link Folder' });
+    containerEl.createEl('h2', { text: '链接文件夹设置' });
     new Setting(containerEl)
-      .setName('Use Incoming')
+      .setName('使用入站链接')
       .setDesc('')
       .addToggle((toggle) =>
         toggle.setValue(this.plugin.settings.linkConfig.incoming.enabled).onChange(async (value) => {
@@ -1409,7 +1407,7 @@ class TagFolderSettingTab extends PluginSettingTab {
         })
       );
     new Setting(containerEl)
-      .setName('Use Outgoing')
+      .setName('使用出站链接')
       .setDesc('')
       .addToggle((toggle) =>
         toggle.setValue(this.plugin.settings.linkConfig.outgoing.enabled).onChange(async (value) => {
@@ -1418,7 +1416,7 @@ class TagFolderSettingTab extends PluginSettingTab {
         })
       );
     new Setting(containerEl)
-      .setName('Hide indirectly linked notes')
+      .setName('隐藏间接链接的笔记')
       .setDesc('')
       .addToggle((toggle) =>
         toggle.setValue(this.plugin.settings.linkShowOnlyFDR).onChange(async (value) => {
@@ -1427,7 +1425,7 @@ class TagFolderSettingTab extends PluginSettingTab {
         })
       );
     new Setting(containerEl)
-      .setName('Connect linked tree')
+      .setName('连接链接树')
       .setDesc('')
       .addToggle((toggle) =>
         toggle.setValue(this.plugin.settings.linkCombineOtherTree).onChange(async (value) => {
@@ -1436,73 +1434,73 @@ class TagFolderSettingTab extends PluginSettingTab {
         })
       );
 
-    containerEl.createEl('h2', { text: 'Filters' });
+    containerEl.createEl('h2', { text: '筛选设置' });
     new Setting(containerEl)
-      .setName('Target Folders')
-      .setDesc('If configured, the plugin will only target files in it.')
+      .setName('目标文件夹')
+      .setDesc('若进行配置，插件将仅针对其中的文件生效。')
       .addTextArea((text) =>
         text
           .setValue(this.plugin.settings.targetFolders)
-          .setPlaceholder('study,documents/summary')
+          .setPlaceholder('学习资料,文档/总结')
           .onChange(async (value) => {
             this.plugin.settings.targetFolders = value;
             await this.plugin.saveSettings();
           })
       );
     new Setting(containerEl)
-      .setName('Ignore Folders')
-      .setDesc('Ignore documents in specific folders.')
+      .setName('忽略文件夹')
+      .setDesc('忽略特定文件夹中的文档。')
       .addTextArea((text) =>
         text
           .setValue(this.plugin.settings.ignoreFolders)
-          .setPlaceholder('template,list/standard_tags')
+          .setPlaceholder('模板,列表/标准标签')
           .onChange(async (value) => {
             this.plugin.settings.ignoreFolders = value;
             await this.plugin.saveSettings();
           })
       );
     new Setting(containerEl)
-      .setName('Ignore note Tag')
-      .setDesc('If the note has the tag listed below, the note would be treated as there was not.')
+      .setName('忽略笔记标签')
+      .setDesc('若笔记包含以下列出的标签，则该笔记将被视为无标签笔记。')
       .addTextArea((text) =>
         text
           .setValue(this.plugin.settings.ignoreDocTags)
-          .setPlaceholder('test,test1,test2')
+          .setPlaceholder('测试,测试1,测试2')
           .onChange(async (value) => {
             this.plugin.settings.ignoreDocTags = value;
             await this.plugin.saveSettings();
           })
       );
     new Setting(containerEl)
-      .setName('Ignore Tag')
-      .setDesc('Tags in the list would be treated as there were not.')
+      .setName('忽略标签')
+      .setDesc('列表中的标签将被视为不存在。')
       .addTextArea((text) =>
         text
           .setValue(this.plugin.settings.ignoreTags)
-          .setPlaceholder('test,test1,test2')
+          .setPlaceholder('测试,测试1,测试2')
           .onChange(async (value) => {
             this.plugin.settings.ignoreTags = value;
             await this.plugin.saveSettings();
           })
       );
     new Setting(containerEl)
-      .setName('Archive tags')
-      .setDesc('If configured, notes with these tags will be moved under the tag.')
+      .setName('归档标签')
+      .setDesc('若进行配置，带有这些标签的笔记将被移动到该标签下。')
       .addTextArea((text) =>
         text
           .setValue(this.plugin.settings.archiveTags)
-          .setPlaceholder('archived, discontinued')
+          .setPlaceholder('已归档,已停用')
           .onChange(async (value) => {
             this.plugin.settings.archiveTags = value;
             await this.plugin.saveSettings();
           })
       );
 
-    containerEl.createEl('h2', { text: 'Misc' });
+    containerEl.createEl('h2', { text: '其他设置' });
 
     new Setting(containerEl)
-      .setName('Tag scanning delay')
-      .setDesc('Sets the delay for reflecting metadata changes to the tag tree. (Plugin reload is required.)')
+      .setName('标签扫描延迟')
+      .setDesc('设置将元数据更改反映到标签树的延迟时间。（需要重新加载插件）')
       .addText((text) => {
         text = text
           .setValue(this.plugin.settings.scanDelay + '')
@@ -1519,37 +1517,33 @@ class TagFolderSettingTab extends PluginSettingTab {
         return text;
       });
     new Setting(containerEl)
-      .setName('Disable dragging tags')
-      .setDesc(
-        'The `Dragging tags` is using internal APIs. If something happens, please disable this once and try again.'
-      )
+      .setName('禁用拖动标签功能')
+      .setDesc('“拖动标签” 功能使用了内部 API。若出现问题，请先禁用此功能再重试。')
       .addToggle((toggle) => {
         toggle.setValue(this.plugin.settings.disableDragging).onChange(async (value) => {
           this.plugin.settings.disableDragging = value;
           await this.plugin.saveSettings();
         });
       });
-    containerEl.createEl('h2', { text: 'Utilities' });
+    containerEl.createEl('h2', { text: '工具设置' });
 
     new Setting(containerEl)
-      .setName('Dumping tags for reporting bugs')
-      .setDesc(
-        'If you want to open an issue to the GitHub, this information can be useful. and, also if you want to keep secrets about names of tags, you can use `disguised`.'
-      )
+      .setName('导出标签用于报告问题')
+      .setDesc('如果你想在 GitHub 上提交问题，此信息可能会有用。此外，如果你想对标签名称保密，可以使用 “伪装标签”。')
       .addButton((button) =>
         button
-          .setButtonText('Copy tags')
+          .setButtonText('复制标签')
           .setDisabled(false)
           .onClick(async () => {
             const itemsAll = await this.plugin.getItemsList('tag');
             const items = itemsAll.map((e) => e.tags.filter((e) => e != '_untagged')).filter((e) => e.length);
             await navigator.clipboard.writeText(items.map((e) => e.map((e) => `#${e}`).join(', ')).join('\n'));
-            new Notice('Copied to clipboard');
+            new Notice('已复制到剪贴板');
           })
       )
       .addButton((button) =>
         button
-          .setButtonText('Copy disguised tags')
+          .setButtonText('复制伪装标签')
           .setDisabled(false)
           .onClick(async () => {
             const x = new Map<string, string>();
@@ -1568,7 +1562,7 @@ class TagFolderSettingTab extends PluginSettingTab {
             );
 
             await navigator.clipboard.writeText(items.map((e) => e.map((e) => `#${e}`).join(', ')).join('\n'));
-            new Notice('Copied to clipboard');
+            new Notice('已复制到剪贴板');
           })
       );
   }

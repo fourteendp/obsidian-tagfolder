@@ -36,9 +36,9 @@ export type LinkParseConf = {
   };
 };
 export const enumShowListIn = {
-  '': 'Sidebar',
-  CURRENT_PANE: 'Current pane',
-  SPLIT_PANE: 'New pane',
+  '': '侧边栏',
+  CURRENT_PANE: '当前面板',
+  SPLIT_PANE: '新面板',
 };
 
 export interface TagFolderSettings {
@@ -176,19 +176,19 @@ export const VIEW_TYPE_TAGFOLDER_LIST = 'tagfolder-view-list';
 export type TREE_TYPE = 'tags' | 'links';
 
 export const OrderKeyTag: Record<string, string> = {
-  NAME: 'Tag name',
-  ITEMS: 'Count of items',
+  NAME: '标签名称',
+  ITEMS: '项目数量',
 };
 export const OrderDirection: Record<string, string> = {
-  ASC: 'Ascending',
-  DESC: 'Descending',
+  ASC: '升序',
+  DESC: '降序',
 };
 export const OrderKeyItem: Record<string, string> = {
-  DISPNAME: 'Displaying name',
-  NAME: 'File name',
-  MTIME: 'Modified time',
-  CTIME: 'Created time',
-  FULLPATH: 'Fullpath of the file',
+  DISPNAME: '显示名称',
+  NAME: '文件名',
+  MTIME: '修改时间',
+  CTIME: '创建时间',
+  FULLPATH: '文件完整路径',
 };
 
 export type TagFolderListState = {
