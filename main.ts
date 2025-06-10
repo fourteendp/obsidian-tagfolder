@@ -1158,22 +1158,21 @@ export default class TagFolderPlugin extends Plugin {
     if (tag == newTag) return;
     const items = await this.getItemsList('tag');
     for (const item of items) {
-      const index = item.tags.indexOf(tag);
-      if (index >= 0) {
-        item.tags[index] = newTag;
-        item.tags = [...new Set(item.tags)];
-        item.tags.sort();
-        const file = this.app.vault.getAbstractFileByPath(item.path);
-        if (file instanceof TFile) {
-          await this.app.fileManager.processFrontMatter(file, (matter) => {
-            const key = this.settings.customTagKey || 'tags';
-            matter[key] = matter[key] ?? [];
-            const index = matter[key].indexOf(tag);
-            if (index >= 0) {
-              matter[key] = item.tags;
-            }
-          });
-        }
+      item.tags = item.tags
+        .map((e) => {
+          if (e == tag) return newTag;
+          if (e.startsWith(tag + '/')) return newTag + e.substring(tag.length);
+          return e;
+        })
+        .filter((e, i, a) => a.indexOf(e) == i)
+        .sort();
+      const file = this.app.vault.getAbstractFileByPath(item.path);
+      if (file instanceof TFile) {
+        await this.app.fileManager.processFrontMatter(file, (matter) => {
+          const key = this.settings.customTagKey || 'tags';
+          matter[key] = matter[key] ?? [];
+          matter[key] = item.tags;
+        });
       }
     }
   }
