@@ -1152,6 +1152,31 @@ export default class TagFolderPlugin extends Plugin {
       await this.app.vault.append(ww, expandedTags);
     }
   }
+
+  async renameTag(tag: string, newTag: string) {
+    if (!newTag) return;
+    if (tag == newTag) return;
+    const items = await this.getItemsList('tag');
+    for (const item of items) {
+      const index = item.tags.indexOf(tag);
+      if (index >= 0) {
+        item.tags[index] = newTag;
+        item.tags = [...new Set(item.tags)];
+        item.tags.sort();
+        const file = this.app.vault.getAbstractFileByPath(item.path);
+        if (file instanceof TFile) {
+          await this.app.fileManager.processFrontMatter(file, (matter) => {
+            const key = this.settings.customTagKey || 'tags';
+            matter[key] = matter[key] ?? [];
+            const index = matter[key].indexOf(tag);
+            if (index >= 0) {
+              matter[key] = item.tags;
+            }
+          });
+        }
+      }
+    }
+  }
 }
 
 class TagFolderSettingTab extends PluginSettingTab {

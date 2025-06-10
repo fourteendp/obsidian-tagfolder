@@ -193,6 +193,7 @@ export abstract class TagFolderViewBase extends ItemView {
       if (targetTag) {
         if (this.plugin.settings.useTagInfo && this.plugin.tagInfo != null) {
           const tag = targetTag;
+          const currentTag = trimTrailingSlash(trail[trail.length - 1]);
 
           if (tag in this.plugin.tagInfo && 'key' in this.plugin.tagInfo[tag]) {
             menu.addItem((item) =>
@@ -217,6 +218,16 @@ export abstract class TagFolderViewBase extends ItemView {
                 });
             });
           }
+          menu.addItem((item) =>
+            item
+              .setTitle(`重命名:${currentTag}`)
+              .setIcon('create-new')
+              .onClick(async () => {
+                const newTag = await askString(this.app, `重命名:`, '', currentTag);
+                if (newTag === false) return;
+                this.plugin.renameTag(currentTag, newTag);
+              })
+          );
           menu.addItem((item) => {
             item
               .setTitle(`设置标签别名`)
