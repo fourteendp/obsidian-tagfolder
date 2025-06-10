@@ -223,7 +223,7 @@ export abstract class TagFolderViewBase extends ItemView {
               .setIcon('pencil')
               .onClick(async () => {
                 const oldAlt = tag in this.plugin.tagInfo ? (this.plugin.tagInfo[tag].alt ?? '') : '';
-                const label = await askString(this.app, '', '', oldAlt);
+                const label = await askString(this.app, '设置标签别名:', '', oldAlt);
                 if (label === false) return;
                 this.plugin.tagInfo[tag] = toggleObjectProp(
                   this.plugin.tagInfo[tag],
@@ -240,7 +240,7 @@ export abstract class TagFolderViewBase extends ItemView {
               .setIcon('pencil')
               .onClick(async () => {
                 const oldMark = tag in this.plugin.tagInfo ? (this.plugin.tagInfo[tag].mark ?? '') : '';
-                const mark = await askString(this.app, '', '', oldMark);
+                const mark = await askString(this.app, '更改标记样式:', '', oldMark);
                 if (mark === false) return;
                 this.plugin.tagInfo[tag] = toggleObjectProp(
                   this.plugin.tagInfo[tag],
@@ -257,7 +257,7 @@ export abstract class TagFolderViewBase extends ItemView {
               .setIcon('pencil')
               .onClick(async () => {
                 const oldRedirect = tag in this.plugin.tagInfo ? (this.plugin.tagInfo[tag].redirect ?? '') : '';
-                const redirect = await askString(this.app, '', '', oldRedirect);
+                const redirect = await askString(this.app, '将此标签重定向至:', '', oldRedirect);
                 if (redirect === false) return;
                 this.plugin.tagInfo[tag] = toggleObjectProp(
                   this.plugin.tagInfo[tag],
