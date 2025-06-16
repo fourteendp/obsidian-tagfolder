@@ -1158,7 +1158,7 @@ export default class TagFolderPlugin extends Plugin {
     if (tag == newTag) return;
     const items = await this.getItemsList('tag');
     for (const item of items) {
-      if (item.tags.includes('_unlinked')) {
+      if (item.tags.includes('_untagged')) {
         continue;
       }
       item.tags = item.tags
