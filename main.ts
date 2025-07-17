@@ -1233,7 +1233,7 @@ class TagFolderSettingTab extends PluginSettingTab {
         });
       });
     new Setting(containerEl)
-      .setName('禁用筛选功能')
+      .setName('禁用关联嵌套功能')
       .setDesc('启用此功能后，相关标签将以标题形式显示，而非生成子结构。')
       .addToggle((toggle) => {
         toggle.setValue(this.plugin.settings.disableNarrowingDown).onChange(async (value) => {
