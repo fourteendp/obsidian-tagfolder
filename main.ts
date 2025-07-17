@@ -644,8 +644,9 @@ export default class TagFolderPlugin extends Plugin {
 
       // filter the items
       const w = searchItems.map((searchItem) => {
+        const allTagsTitle = [...allTags, this.getFileTitle(fileCache.file)] as string[];
         let bx = false;
-        if (allTags.length == 0) return false;
+        if (allTagsTitle.length == 0) return false;
         for (const searchSrc of searchItem) {
           let search = searchSrc;
           let func = 'contains' as 'contains' | 'startsWith';
@@ -654,10 +655,10 @@ export default class TagFolderPlugin extends Plugin {
             func = 'startsWith';
           }
           if (search.startsWith('-')) {
-            bx = bx || allTags.some((tag) => tag.toLowerCase()[func](search.substring(1)));
+            bx = bx || allTagsTitle.some((tag) => tag.toLowerCase()[func](search.substring(1)));
             // if (bx) continue;
           } else {
-            bx = bx || allTags.every((tag) => !tag.toLowerCase()[func](search));
+            bx = bx || allTagsTitle.every((tag) => !tag.toLowerCase()[func](search));
             // if (bx) continue;
           }
         }
