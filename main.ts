@@ -1158,18 +1158,18 @@ export default class TagFolderPlugin extends Plugin {
     if (!newTag) return;
     if (tag == newTag) return;
     const items = await this.getItemsList('tag');
-    for (const item of items) {
-      if (item.tags.includes('_untagged')) {
-        continue;
-      }
-      item.tags = item.tags
-        .map((e) => {
-          if (e == tag) return newTag;
-          if (e.startsWith(tag + '/')) return newTag + e.substring(tag.length);
-          return e;
-        })
-        .filter((e, i, a) => a.indexOf(e) == i)
-        .sort();
+    const newItems = items
+      .filter((e) => {
+        return e.tags.includes(tag) && !e.tags.includes('_untagged');
+      })
+      .map((i) => {
+        return {
+          path: i.path,
+          tags: [...new Set([newTag, ...i.extraTags])].sort(),
+        };
+      });
+
+    for (const item of newItems) {
       const file = this.app.vault.getAbstractFileByPath(item.path);
       if (file instanceof TFile) {
         await this.app.fileManager.processFrontMatter(file, (matter) => {
